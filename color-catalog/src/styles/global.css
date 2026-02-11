@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-variant-numeric: tabular-nums;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background 200ms ease, color 200ms ease;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
