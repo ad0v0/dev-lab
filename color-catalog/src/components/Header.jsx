@@ -1,4 +1,4 @@
-import { useUI } from "@/stores/useUI";
+import { useUI } from "@/stores/useUI.js";
 import "@/styles/components/header.css"
 
 export const Header = () => {

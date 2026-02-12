@@ -5,14 +5,19 @@ export const useColors = create((set) =>  ({
   isLoading: false,
   error: null,
 
-  fetchColors: async () => {
+  fetchColors: async (baseColor, count, mode) => {
     try {
       set({
         isLoading: true,
         error: null
       })
 
-      const response = await fetch(`${import.meta.env.VITE_COLORS_API}/scheme?hex=0047AB&mode=analogic&count=6`);
+      const response = await fetch(`${import.meta.env.VITE_COLORS_API}/scheme?hex=${baseColor.replace('#', '')}&mode=${mode.toLowerCase()}&count=${count}`);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch the colors")
+      }
+
       const data = await response.json();
 
       set({

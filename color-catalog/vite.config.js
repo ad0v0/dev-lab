@@ -5,6 +5,7 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/dev-lab/color-catalog/',
   server: {
     port: 3000,
     open: true
