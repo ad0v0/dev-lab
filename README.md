@@ -14,6 +14,10 @@ Each folder represents a topic, technology, or experiment. Projects may vary in 
 - Code quality and approaches may evolve over time.
 - This repo reflects learning in progress.
 
+## Project links
+
+- [Color catalog](https://ad0v0.github.io/dev-lab/color-catalog/)
+
 ## License
 
 MIT
