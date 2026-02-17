@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useShallow } from "zustand/react/shallow"
 
 import { Card } from "@/components/cards/Card.jsx";
 import { useColors } from "@/stores/useColors.js";
@@ -7,9 +8,12 @@ import { useFilteredColors } from "@/hooks/useFilteredColors.js";
 
 export const CardsList = () => {
   const fetchColors = useColors((state) => state.fetchColors);
-  const baseColor = useControls((state) => state.baseColor);
-  const mode = useControls((state) => state.mode);
-  const count = useControls((state) => state.count);
+
+  const { baseColor, mode, count } = useControls(useShallow((state) => ({
+    baseColor: state.baseColor,
+    mode: state.mode,
+    count: state.count
+  })));
 
   const colors = useFilteredColors()
 
@@ -22,7 +26,7 @@ export const CardsList = () => {
       <ul className="cards-list">
         {colors.map((color) => (
           <li key={color.hex.value}>
-            <Card key={color.hex.value} color={color} />
+            <Card color={color} />
           </li>
         ))}
       </ul>

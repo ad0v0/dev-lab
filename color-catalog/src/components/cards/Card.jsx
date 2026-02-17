@@ -1,8 +1,8 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, memo } from 'react'
 
 import "@/styles/components/card.css"
 
-export const Card = ({ color }) => {
+export const Card = memo(({ color }) => {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -37,4 +37,4 @@ export const Card = ({ color }) => {
       <p className="card-meta">{color.name.value}</p>
     </div>
   )
-}
+});
