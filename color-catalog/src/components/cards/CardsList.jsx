@@ -5,9 +5,14 @@ import { Card } from "@/components/cards/Card.jsx";
 import { useColors } from "@/stores/useColors.js";
 import { useControls } from "@/stores/useControls.js";
 import { useFilteredColors } from "@/hooks/useFilteredColors.js";
+import { LoadingStateView } from "@/components/state-views/LoadingStateView.jsx"
+import { ErrorStateView } from "@/components/state-views/ErrorStateView.jsx";
+import { EmptyStateView } from "@/components/state-views/EmptyStateView.jsx";
 
 export const CardsList = () => {
   const fetchColors = useColors((state) => state.fetchColors);
+  const isLoading = useColors((state) => state.isLoading);
+  const error = useColors((state) => state.error);
 
   const { baseColor, mode, count } = useControls(useShallow((state) => ({
     baseColor: state.baseColor,
@@ -20,6 +25,18 @@ export const CardsList = () => {
   useEffect(() => {
     fetchColors(baseColor, count, mode)
   }, [fetchColors, baseColor, count, mode])
+
+  if (isLoading) {
+    return <LoadingStateView />
+  }
+
+  if (error) {
+    return <ErrorStateView />
+  }
+
+  if (!colors.length) {
+    return <EmptyStateView />
+  }
 
   return (
     <div className="cards-wrapper">
