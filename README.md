@@ -17,7 +17,8 @@ Each folder represents a topic, technology, or experiment. Projects may vary in 
 ## Project links
 
 - [Color catalog](https://ad0v0.github.io/dev-lab/color-catalog/)
-
+- [Mood lens](https://ad0v0.github.io/dev-lab/mood-lens/)
+  
 ## License
 
 MIT
