@@ -53,6 +53,33 @@ export type AlertState = {
   level: 'nominal' | 'warning' | 'critical';
 };
 
+export type HudControl = {
+  label: string;
+  hint: string;
+  state: 'armed' | 'standby' | 'locked';
+};
+
+export type SurfaceTreatment = {
+  name: string;
+  code: string;
+  note: string;
+  tone: 'warning' | 'cool' | 'dim';
+};
+
+export type DisplayCarrier = {
+  name: string;
+  code: string;
+  mode: 'corridor' | 'scan' | 'route' | 'terminal';
+  lines: string[];
+};
+
+export type HardwareShell = {
+  name: string;
+  code: string;
+  kind: 'well' | 'plate' | 'cassette' | 'frame';
+  note: string;
+};
+
 export type ConsoleZone = {
   title: string;
   eyebrow: string;
@@ -81,12 +108,10 @@ export const modeDefinitions: ModeDefinitionMap = {
   },
   'design-system': {
     label: 'Design System',
-    title: 'HUD Component Language',
-    tag: 'Panels / controls / readouts',
-    intro:
-      'A curated board of reusable interface language: not enterprise UI, but a disciplined toolkit for building retro-futuristic compositions.',
-    summary:
-      'This mode focuses on the small recurring ingredients that make the world legible: panels, labels, buttons, indicators, readouts, and alert treatment.',
+    title: 'Recovered Console Fragments',
+    tag: 'utility / telemetry / containment',
+    intro: 'Recovered operational fragments from Quarantine Mission Console surfaces.',
+    summary: 'Panel housings, utility strips, readout wells, and warning logic.',
   },
   scene: {
     label: 'Scene',
@@ -152,36 +177,56 @@ export const labEffects: LabEffect[] = [
 
 export const panelVariants: PanelVariant[] = [
   {
-    name: 'Containment Panel',
-    label: 'Standard',
-    description: 'Default structural surface for grouped content.',
+    name: 'Diagnostic Housing',
+    label: 'Housing',
+    description: 'Primary shell for embedded feeds and telemetry wells.',
     variant: 'standard',
   },
   {
-    name: 'Hazard Panel',
-    label: 'Warning',
-    description: 'Use when the surface needs extra urgency or escalation.',
+    name: 'Warning Strip',
+    label: 'Strip',
+    description: 'Escalation shell for containment faults and procedural lockouts.',
     variant: 'warning',
   },
   {
-    name: 'Ghost Panel',
-    label: 'Ghost',
-    description: 'Low-emphasis shell for supporting cues and annotations.',
+    name: 'Service Plate',
+    label: 'Plate',
+    description: 'Low-energy cover plate for legends, residue, and support channels.',
     variant: 'ghost',
   },
 ];
 
 export const hudLabels = [
-  'Dock A-17',
-  'Synthetic Relay',
-  'Pressure Gate',
-  'Observation Feed',
+  'BAY A-17',
+  'SYN RELAY',
+  'PRESSURE GATE',
+  'FEED CHANNEL',
+  'SHUTTER LOCK',
+  'THERMAL TRACE',
 ] as const;
 
 export const hudButtons: HudButton[] = [
   { label: 'Arm Seal', variant: 'primary' },
   { label: 'Cycle Grid', variant: 'secondary' },
   { label: 'Purge Bay', variant: 'danger' },
+];
+
+export const hudControls: HudControl[] = [
+  {
+    label: 'Containment Latch',
+    hint: 'Inner corridor access',
+    state: 'armed',
+  },
+  {
+    label: 'Observer Relay',
+    hint: 'Remote synthetic uplink',
+    state: 'standby',
+  },
+  {
+    label: 'Manual Override',
+    hint: 'Dual-operator authorization',
+    state: 'locked',
+  },
 ];
 
 export const hudIndicators: HudIndicator[] = [
@@ -199,21 +244,96 @@ export const hudReadouts: Readout[] = [
 
 export const alertStates: AlertState[] = [
   {
-    label: 'Nominal',
-    description: 'System is quiet, responsive, and visually restrained.',
+    label: 'Nominal Window',
+    description: 'Quiet systems. Edges stay calm, glow stays buried, and text carries the load.',
     level: 'nominal',
   },
   {
-    label: 'Warning',
-    description: 'Localized hazard detected. Surfaces intensify and pulse briefly.',
+    label: 'Containment Warning',
+    description: 'Localized risk. Surfaces sharpen, amber channels rise, and pulse is permitted.',
     level: 'warning',
   },
   {
-    label: 'Critical',
-    description: 'Containment risk is escalating. The interface hardens and reddens.',
+    label: 'Critical Breach',
+    description: 'Escalation state. Red logic takes over and framing compresses toward intervention.',
     level: 'critical',
   },
 ];
+
+export const surfaceTreatments: SurfaceTreatment[] = [
+  {
+    name: 'Worn Outer Rail',
+    code: 'FRM-01',
+    note: 'Segmented perimeter seam with softened abrasion and low amber bleed.',
+    tone: 'warning',
+  },
+  {
+    name: 'Cold Inset Well',
+    code: 'MAT-04',
+    note: 'Deep internal cavity for telemetry blocks and scanner wells.',
+    tone: 'cool',
+  },
+  {
+    name: 'Ghost Annotation Strip',
+    code: 'AUX-02',
+    note: 'Low-priority surface for legends, calibration marks, and crew residue.',
+    tone: 'dim',
+  },
+];
+
+export const hardwareShells: HardwareShell[] = [
+  {
+    name: 'Monitor Well',
+    code: 'HW-11',
+    kind: 'well',
+    note: 'Deep-set carrier for phosphor displays and clipped visual channels.',
+  },
+  {
+    name: 'Hatch Latch Plate',
+    code: 'HW-03',
+    kind: 'plate',
+    note: 'Procedural shell with seam weight and mechanical lock emphasis.',
+  },
+  {
+    name: 'Relay Cassette',
+    code: 'HW-27',
+    kind: 'cassette',
+    note: 'Swappable control block for narrow service functions and line switching.',
+  },
+  {
+    name: 'Utility Frame',
+    code: 'HW-08',
+    kind: 'frame',
+    note: 'Structural channel used to bind smaller console fragments into one housing.',
+  },
+] as const;
+
+export const displayCarriers: DisplayCarrier[] = [
+  {
+    name: 'Corridor Feed',
+    code: 'FD-A17',
+    mode: 'corridor',
+    lines: ['corridor a-17', 'feed stable', 'minor luminance drift'],
+  },
+  {
+    name: 'Contamination Scan',
+    code: 'SC-04',
+    mode: 'scan',
+    lines: ['air trace low', 'particulate sweep live', 'amber band reserved'],
+  },
+  {
+    name: 'Route Schematic',
+    code: 'RT-9',
+    mode: 'route',
+    lines: ['bay > shutter > lock', 'manual path degraded', 'aux route sealed'],
+  },
+  {
+    name: 'Maintenance Terminal',
+    code: 'MT-02',
+    mode: 'terminal',
+    lines: ['service prompt open', 'cursor awaiting', 'uplink intermittent'],
+  },
+] as const;
 
 export const consoleZones: ConsoleZone[] = [
   {

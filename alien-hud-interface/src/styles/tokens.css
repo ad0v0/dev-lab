@@ -11,7 +11,9 @@
   --color-text-muted: #94a895;
   --color-warning: #f2ae49;
   --color-ok: #8cd8b9;
+  --color-danger: #ff7f6a;
   --color-muted: #597268;
+  --color-steel: #73877d;
   --color-grid: rgba(171, 219, 185, 0.08);
 
   --shadow-panel: 0 0 0 1px rgba(211, 245, 214, 0.06),
