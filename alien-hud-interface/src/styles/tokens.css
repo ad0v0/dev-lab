@@ -1,0 +1,29 @@
+:root {
+  --font-display: 'Arial Narrow', 'Eurostile', sans-serif;
+  --font-body: 'Segoe UI', sans-serif;
+  --font-mono: 'SFMono-Regular', 'Consolas', monospace;
+
+  --color-bg: #08110f;
+  --color-bg-elevated: rgba(10, 20, 18, 0.88);
+  --color-panel: rgba(15, 29, 26, 0.84);
+  --color-panel-border: rgba(114, 143, 109, 0.24);
+  --color-text: #d9e5d8;
+  --color-text-muted: #94a895;
+  --color-warning: #f2ae49;
+  --color-ok: #8cd8b9;
+  --color-muted: #597268;
+  --color-grid: rgba(171, 219, 185, 0.08);
+
+  --shadow-panel: 0 0 0 1px rgba(211, 245, 214, 0.06),
+    0 20px 60px rgba(0, 0, 0, 0.4);
+  --radius-panel: 20px;
+  --radius-chip: 999px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+}
