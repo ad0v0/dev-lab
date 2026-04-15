@@ -90,10 +90,22 @@ export function QuarantineTunnelVisor() {
 
         <div className="visor-scene__layer visor-scene__hud-shell" aria-hidden="true">
           <div className="hud-shell-frame">
-            <span className="hud-shell-frame__edge hud-shell-frame__edge--top" />
-            <span className="hud-shell-frame__edge hud-shell-frame__edge--bottom" />
-            <span className="hud-shell-frame__corner hud-shell-frame__corner--left" />
-            <span className="hud-shell-frame__corner hud-shell-frame__corner--right" />
+            <span className="hud-shell-frame__edge hud-shell-frame__edge--top-left" />
+            <span className="hud-shell-frame__edge hud-shell-frame__edge--top-center" />
+            <span className="hud-shell-frame__edge hud-shell-frame__edge--top-right" />
+            <span className="hud-shell-frame__edge hud-shell-frame__edge--bottom-left" />
+            <span className="hud-shell-frame__edge hud-shell-frame__edge--bottom-center" />
+            <span className="hud-shell-frame__edge hud-shell-frame__edge--bottom-right" />
+            <span className="hud-shell-frame__corner hud-shell-frame__corner--top-left" />
+            <span className="hud-shell-frame__corner hud-shell-frame__corner--top-right" />
+            <span className="hud-shell-frame__corner hud-shell-frame__corner--bottom-left" />
+            <span className="hud-shell-frame__corner hud-shell-frame__corner--bottom-right" />
+            <span className="hud-shell-frame__delimiter hud-shell-frame__delimiter--left" />
+            <span className="hud-shell-frame__delimiter hud-shell-frame__delimiter--right" />
+            <span className="hud-shell-frame__rail hud-shell-frame__rail--left" />
+            <span className="hud-shell-frame__rail hud-shell-frame__rail--right" />
+            <span className="hud-shell-frame__rail-cap hud-shell-frame__rail-cap--left" />
+            <span className="hud-shell-frame__rail-cap hud-shell-frame__rail-cap--right" />
           </div>
         </div>
 

@@ -587,7 +587,10 @@ button {
 .optics-frame__ring,
 .optics-frame__glint,
 .hud-shell-frame__edge,
-.hud-shell-frame__corner {
+.hud-shell-frame__corner,
+.hud-shell-frame__delimiter,
+.hud-shell-frame__rail,
+.hud-shell-frame__rail-cap {
   position: absolute;
   display: block;
 }
@@ -620,39 +623,149 @@ button {
   right: 8%;
 }
 
-.hud-shell-frame__edge--top,
-.hud-shell-frame__edge--bottom {
-  left: 12%;
-  right: 12%;
+.hud-shell-frame__edge {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--scene-color-line), transparent);
+  background: linear-gradient(90deg, transparent, rgba(160, 211, 179, 0.24), transparent);
 }
 
-.hud-shell-frame__edge--top {
+.hud-shell-frame__edge--top-left,
+.hud-shell-frame__edge--top-right {
+  top: 11.5%;
+  width: 16%;
+}
+
+.hud-shell-frame__edge--top-left {
+  left: 12%;
+}
+
+.hud-shell-frame__edge--top-right {
+  right: 12%;
+}
+
+.hud-shell-frame__edge--top-center {
   top: 12%;
+  left: 50%;
+  width: min(20vw, 14rem);
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(160, 211, 179, 0.34) 16%, rgba(160, 211, 179, 0.34) 84%, transparent);
 }
 
-.hud-shell-frame__edge--bottom {
+.hud-shell-frame__edge--bottom-left,
+.hud-shell-frame__edge--bottom-right {
   bottom: 15%;
+  width: 17%;
+}
+
+.hud-shell-frame__edge--bottom-left {
+  left: 16%;
+}
+
+.hud-shell-frame__edge--bottom-right {
+  right: 16%;
+}
+
+.hud-shell-frame__edge--bottom-center {
+  left: 50%;
+  bottom: 14%;
+  width: min(22vw, 15rem);
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(242, 174, 73, 0.2) 22%, rgba(160, 211, 179, 0.28) 50%, rgba(242, 174, 73, 0.2) 78%, transparent);
 }
 
 .hud-shell-frame__corner {
-  bottom: 15%;
-  width: 12%;
-  height: 12%;
-  border-bottom: 1px solid rgba(159, 227, 193, 0.22);
+  width: 6.5%;
+  height: 9%;
+  border-color: rgba(159, 227, 193, 0.22);
+  border-style: solid;
+  opacity: 0.95;
 }
 
-.hud-shell-frame__corner--left {
+.hud-shell-frame__corner--top-left,
+.hud-shell-frame__corner--top-right {
+  top: 9.8%;
+  border-bottom: 0;
+}
+
+.hud-shell-frame__corner--bottom-left,
+.hud-shell-frame__corner--bottom-right {
+  bottom: 14%;
+  border-top: 0;
+}
+
+.hud-shell-frame__corner--top-left {
+  left: 9%;
+  border-width: 1px 0 0 1px;
+  clip-path: polygon(0 100%, 0 0, 100% 0, 56% 100%);
+}
+
+.hud-shell-frame__corner--top-right {
+  right: 9%;
+  border-width: 1px 1px 0 0;
+  clip-path: polygon(44% 100%, 0 0, 100% 0, 100% 100%);
+}
+
+.hud-shell-frame__corner--bottom-left {
   left: 8%;
-  border-left: 1px solid rgba(159, 227, 193, 0.22);
-  clip-path: polygon(0 0, 100% 32%, 100% 100%, 0 100%);
+  border-width: 0 0 1px 1px;
+  clip-path: polygon(0 0, 56% 0, 100% 100%, 0 100%);
 }
 
-.hud-shell-frame__corner--right {
+.hud-shell-frame__corner--bottom-right {
   right: 8%;
-  border-right: 1px solid rgba(159, 227, 193, 0.22);
-  clip-path: polygon(0 32%, 100% 0, 100% 100%, 0 100%);
+  border-width: 0 1px 1px 0;
+  clip-path: polygon(0 100%, 44% 0, 100% 0, 100% 100%);
+}
+
+.hud-shell-frame__delimiter {
+  top: 18%;
+  bottom: 22%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(160, 211, 179, 0.12) 18%, rgba(160, 211, 179, 0.16) 48%, transparent);
+  opacity: 0.85;
+}
+
+.hud-shell-frame__delimiter--left {
+  left: 14%;
+}
+
+.hud-shell-frame__delimiter--right {
+  right: 14%;
+}
+
+.hud-shell-frame__rail {
+  bottom: 10.5%;
+  width: min(16vw, 10rem);
+  height: 2.3rem;
+  border: 1px solid rgba(159, 227, 193, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 36%),
+    rgba(5, 11, 10, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.hud-shell-frame__rail--left {
+  left: 10%;
+  clip-path: polygon(0 18%, 82% 18%, 100% 100%, 0 100%);
+}
+
+.hud-shell-frame__rail--right {
+  right: 10%;
+  clip-path: polygon(18% 18%, 100% 18%, 100% 100%, 0 100%);
+}
+
+.hud-shell-frame__rail-cap {
+  bottom: 12.2%;
+  width: 5.5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(242, 174, 73, 0.32), transparent);
+}
+
+.hud-shell-frame__rail-cap--left {
+  left: 24%;
+}
+
+.hud-shell-frame__rail-cap--right {
+  right: 24%;
 }
 
 .ambient-strip {
