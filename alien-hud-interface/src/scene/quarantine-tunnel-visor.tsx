@@ -93,6 +93,12 @@ export function QuarantineTunnelVisor() {
 
         <div className="visor-scene__layer visor-scene__optics" aria-hidden="true">
           <div className="optics-frame">
+            <span className="optics-frame__vignette" />
+            <span className="optics-frame__veil" />
+            <span className="optics-frame__grime optics-frame__grime--left" />
+            <span className="optics-frame__grime optics-frame__grime--right" />
+            <span className="optics-frame__ghost" />
+            <span className="optics-frame__scan" />
             <span className="optics-frame__ring optics-frame__ring--outer" />
             <span className="optics-frame__ring optics-frame__ring--inner" />
             <span className="optics-frame__glint optics-frame__glint--left" />

@@ -584,6 +584,32 @@ button {
   inset: var(--scene-space-edge);
 }
 
+.optics-frame::before,
+.optics-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.optics-frame::before {
+  background:
+    radial-gradient(circle at center, transparent 0 54%, rgba(0, 0, 0, 0.08) 74%, rgba(0, 0, 0, 0.22) 100%);
+  opacity: 0.52;
+}
+
+.optics-frame::after {
+  inset: 2.5% 3%;
+  border-radius: 42% 42% 48% 48% / 34% 34% 54% 54%;
+  border: 1px solid rgba(210, 233, 221, 0.028);
+  opacity: 0.72;
+}
+
+.optics-frame__vignette,
+.optics-frame__veil,
+.optics-frame__grime,
+.optics-frame__ghost,
+.optics-frame__scan,
 .optics-frame__ring,
 .optics-frame__glint,
 .hud-shell-frame__edge,
@@ -595,32 +621,96 @@ button {
   display: block;
 }
 
+.optics-frame__vignette {
+  inset: 0;
+  background:
+    radial-gradient(circle at center, transparent 0 40%, rgba(6, 12, 11, 0.06) 56%, rgba(0, 0, 0, 0.24) 78%, rgba(0, 0, 0, 0.52) 100%);
+  opacity: 0.94;
+}
+
+.optics-frame__veil {
+  inset: 8% 8% 10%;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(214, 232, 223, 0.1), rgba(214, 232, 223, 0.04) 26%, transparent 54%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(210, 233, 221, 0.015) 18%, rgba(10, 18, 18, 0.045) 66%, rgba(0, 0, 0, 0.09));
+  filter: blur(14px);
+  opacity: 0.8;
+}
+
+.optics-frame__grime {
+  top: 10%;
+  bottom: 8%;
+  width: 20%;
+  background:
+    linear-gradient(180deg, rgba(222, 237, 229, 0.03), transparent 18%, rgba(0, 0, 0, 0.04) 70%, transparent),
+    radial-gradient(ellipse at 38% 18%, rgba(214, 232, 223, 0.08), transparent 16%),
+    radial-gradient(ellipse at 62% 44%, rgba(214, 232, 223, 0.055), transparent 18%),
+    radial-gradient(ellipse at 46% 72%, rgba(214, 232, 223, 0.05), transparent 14%),
+    radial-gradient(ellipse at 56% 90%, rgba(214, 232, 223, 0.04), transparent 10%);
+  filter: blur(18px);
+  opacity: 0.42;
+}
+
+.optics-frame__grime--left {
+  left: 1.5%;
+  clip-path: polygon(0 0, 100% 10%, 72% 100%, 0 100%);
+}
+
+.optics-frame__grime--right {
+  right: 1.5%;
+  clip-path: polygon(28% 0, 100% 0, 100% 100%, 0 10%);
+}
+
+.optics-frame__ghost {
+  inset: 18% 23% 25%;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(214, 232, 223, 0.04), transparent 44%),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.02), transparent);
+  filter: blur(20px);
+  opacity: 0.42;
+  transform: translate(0.7%, 0.35%);
+}
+
+.optics-frame__scan {
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(214, 232, 223, 0.028) 0,
+      rgba(214, 232, 223, 0.028) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.2), black 58%, rgba(0, 0, 0, 0.22));
+  opacity: 0.4;
+}
+
 .optics-frame__ring--outer {
-  inset: 12% 9%;
-  border: 1px solid rgba(159, 227, 193, 0.08);
+  inset: 11% 8%;
+  border: 1px solid rgba(159, 227, 193, 0.035);
   border-radius: 50%;
+  opacity: 0.34;
 }
 
 .optics-frame__ring--inner {
-  inset: 22% 18%;
-  border: 1px solid rgba(159, 227, 193, 0.06);
-  border-radius: 50%;
+  display: none;
 }
 
 .optics-frame__glint {
-  top: 50%;
+  top: 46%;
   width: 12%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(242, 174, 73, 0.42), transparent);
-  opacity: 0.5;
+  background: linear-gradient(90deg, transparent, rgba(242, 174, 73, 0.5), rgba(210, 233, 221, 0.14), transparent);
+  opacity: 0.56;
+  filter: blur(0.35px);
 }
 
 .optics-frame__glint--left {
-  left: 8%;
+  left: 6.5%;
 }
 
 .optics-frame__glint--right {
-  right: 8%;
+  right: 6.5%;
 }
 
 .hud-shell-frame__edge {
