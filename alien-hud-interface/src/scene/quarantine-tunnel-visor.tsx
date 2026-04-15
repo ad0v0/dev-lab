@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 type SceneMode = 'base' | 'detector' | 'mission';
+type ScenePhase = 'boot' | 'recovering' | 'live';
 type TriggerMode = Exclude<SceneMode, 'base'>;
 
 const missionRows = [
@@ -15,21 +16,40 @@ const modeStatusCopy: Record<SceneMode, string> = {
   mission: 'MODE MISSION // OBJECTIVE BUS',
 };
 
+const phaseStatusCopy: Record<ScenePhase, string> = {
+  boot: 'BOOTING',
+  recovering: 'RECOVERING',
+  live: 'LIVE',
+};
+
 function toggleMode(currentMode: SceneMode, nextMode: TriggerMode): SceneMode {
   return currentMode === nextMode ? 'base' : nextMode;
 }
 
 export function QuarantineTunnelVisor() {
   const [mode, setMode] = useState<SceneMode>('base');
+  const [phase, setPhase] = useState<ScenePhase>('boot');
   const modeStatus = modeStatusCopy[mode];
+  const phaseStatus = phaseStatusCopy[phase];
+  const isLive = phase === 'live';
 
   function handleModeToggle(nextMode: TriggerMode) {
     setMode((currentMode) => toggleMode(currentMode, nextMode));
   }
 
   useEffect(() => {
+    const recoveringTimer = window.setTimeout(() => setPhase('recovering'), 750);
+    const liveTimer = window.setTimeout(() => setPhase('live'), 2300);
+
+    return () => {
+      window.clearTimeout(recoveringTimer);
+      window.clearTimeout(liveTimer);
+    };
+  }, []);
+
+  useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.altKey || event.ctrlKey || event.metaKey) {
+      if (!isLive || event.altKey || event.ctrlKey || event.metaKey) {
         return;
       }
 
@@ -46,13 +66,13 @@ export function QuarantineTunnelVisor() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isLive]);
 
   return (
     <section
       className="visor-scene"
       aria-label="Quarantine Tunnel Visor scene"
-      data-phase="live"
+      data-phase={phase}
       data-mode={mode}
     >
       <div className="visor-scene__camera">
@@ -129,13 +149,21 @@ export function QuarantineTunnelVisor() {
 
         <div className="visor-scene__layer visor-scene__ambient-ui" aria-hidden="true">
           <div className="ambient-strip ambient-strip--top">
-            <span>QTV / POV / LIVE</span>
+            <span>QTV / POV / {phaseStatus}</span>
             <span>OPTICS DEGRADED</span>
             <span className="ambient-strip__mode">{modeStatus}</span>
           </div>
           <div className="ambient-strip ambient-strip--bottom">
             <span>REMOTE VISOR</span>
-            <span>{mode === 'base' ? 'LOW LATENCY HOLD' : 'TOOL CHANNEL ACTIVE'}</span>
+            <span>
+              {phase === 'boot'
+                ? 'FEED UNAVAILABLE'
+                : phase === 'recovering'
+                  ? 'SIGNAL STABILIZING'
+                  : mode === 'base'
+                    ? 'LOW LATENCY HOLD'
+                    : 'TOOL CHANNEL ACTIVE'}
+            </span>
           </div>
         </div>
 
@@ -183,6 +211,7 @@ export function QuarantineTunnelVisor() {
               className="scene-trigger scene-trigger--detector"
               aria-pressed={mode === 'detector'}
               aria-label="Toggle motion detector overlay"
+              disabled={!isLive}
               onClick={() => handleModeToggle('detector')}
             >
               <span className="scene-trigger__eyebrow">Left Trigger</span>
@@ -197,6 +226,7 @@ export function QuarantineTunnelVisor() {
               className="scene-trigger scene-trigger--mission"
               aria-pressed={mode === 'mission'}
               aria-label="Toggle mission console overlay"
+              disabled={!isLive}
               onClick={() => handleModeToggle('mission')}
             >
               <span className="scene-trigger__eyebrow">Right Trigger</span>
