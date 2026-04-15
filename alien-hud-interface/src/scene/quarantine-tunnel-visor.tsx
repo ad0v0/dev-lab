@@ -6,32 +6,32 @@ type TriggerMode = Exclude<SceneMode, 'base'>;
 type GlitchLevel = 'none' | 'light' | 'hard';
 
 const missionStatusRows = [
-  ['Sector', 'OBS / A17 / EAST'],
-  ['Route', 'TUNNEL SPINE / LOCK 2'],
-  ['Objective', 'HOLD QUARANTINE THRESHOLD'],
+  ['Sector', 'OBS / A17 / E-LOCK'],
+  ['Route Bus', 'SPINE / LOCK-2 / EAST'],
+  ['Task', 'HOLD THRESHOLD / NO ADVANCE'],
 ] as const;
 
 const missionSystemRows = [
-  ['Crew Link', 'UNSYNCED / 1 OF 4'],
-  ['Seal State', 'INNER GATE // PARTIAL'],
+  ['Crew Link', 'UNSYNC / 1 OF 4'],
+  ['Seal Bus', 'INNER GATE / PARTIAL'],
   ['Bio-Risk', 'AMBER / SPORE TRACE'],
-  ['Archive', 'FRAGMENTED / CRC LOSS'],
+  ['Archive', 'FRAG / CRC LOSS'],
 ] as const;
 
 const missionArchiveFragments = [
-  '00:13:27 // channel-2 break... visual contact los[t]',
-  '00:14:02 // purge request denied // manual auth miss_ing',
+  '00:13:27 // chan-2 break... visual co[tact] lost',
+  '00:14:02 // purge req denied // manual auth miss_ing',
 ] as const;
 
 const modeStatusCopy: Record<SceneMode, string> = {
-  base: 'MODE BASE // PASSIVE WATCH',
-  detector: 'MODE DETECTOR // MOTION TRACE',
-  mission: 'MODE MISSION // OBJECTIVE BUS',
+  base: 'BASE BUS / PASSIVE WATCH',
+  detector: 'DETECT BUS / MOTION TRACE',
+  mission: 'MISSION BUS / ARCHIVE FEED',
 };
 
 const phaseStatusCopy: Record<ScenePhase, string> = {
-  boot: 'BOOTING',
-  recovering: 'RECOVERING',
+  boot: 'BOOT',
+  recovering: 'RECOVER',
   live: 'LIVE',
 };
 
@@ -234,20 +234,20 @@ export function QuarantineTunnelVisor() {
 
         <div className="visor-scene__layer visor-scene__ambient-ui" aria-hidden="true">
           <div className="ambient-strip ambient-strip--top">
-            <span>QTV / POV / {phaseStatus}</span>
-            <span>OPTICS DEGRADED</span>
+            <span>QTV / VISOR / {phaseStatus}</span>
+            <span>OPTICS / DEGRADED</span>
             <span className="ambient-strip__mode">{modeStatus}</span>
           </div>
           <div className="ambient-strip ambient-strip--bottom">
-            <span>REMOTE VISOR</span>
+            <span>REMOTE LINK</span>
             <span>
               {phase === 'boot'
-                ? 'FEED UNAVAILABLE'
+                ? 'FEED / NULL'
                 : phase === 'recovering'
-                  ? 'SIGNAL STABILIZING'
+                  ? 'SYNC / UNSTABLE'
                   : mode === 'base'
-                    ? 'LOW LATENCY HOLD'
-                    : 'TOOL CHANNEL ACTIVE'}
+                    ? 'IDLE BUS / HOLD'
+                    : 'TOOL BUS / OPEN'}
             </span>
           </div>
         </div>
@@ -259,13 +259,13 @@ export function QuarantineTunnelVisor() {
             aria-hidden={mode !== 'detector'}
           >
             <div className="mode-panel__header">
-              <p className="eyebrow">Detector</p>
-              <span className="mode-panel__state">MOTION TRACE // DEGRADED TRACK</span>
+              <p className="eyebrow">Motion Detector</p>
+              <span className="mode-panel__state">TRACE BUS / DEGRADED TRACK</span>
             </div>
             <div className="detector-panel">
               <div className="detector-panel__meta" aria-hidden="true">
-                <span>Tracker Bus / A17</span>
-                <span>CONF 61%</span>
+                <span>Tracker Bus / A17-E</span>
+                <span>Conf / 61%</span>
               </div>
 
               <div className="detector-screen" aria-hidden="true">
@@ -290,11 +290,11 @@ export function QuarantineTunnelVisor() {
               <div className="detector-panel__readout">
                 <div className="detector-readout">
                   <span>Range Gate</span>
-                  <strong>24M / SWEEP</strong>
+                  <strong>24M / ACTIVE</strong>
                 </div>
                 <div className="detector-readout detector-readout--watch">
-                  <span>Trace Echo</span>
-                  <strong>INTERMITTENT</strong>
+                  <span>Echo Return</span>
+                  <strong>INTERMIT</strong>
                 </div>
               </div>
             </div>
@@ -306,16 +306,16 @@ export function QuarantineTunnelVisor() {
             aria-hidden={mode !== 'mission'}
           >
             <div className="mode-panel__header">
-              <p className="eyebrow">Mission Console</p>
-              <span className="mode-panel__state">OBJECTIVE BUS // ARCHIVE DEGRADED</span>
+              <p className="eyebrow">Mission Archive</p>
+              <span className="mode-panel__state">OBJECTIVE BUS / ARCHIVE DEGRADED</span>
             </div>
             <div className="mission-console">
               <header className="mission-console__header">
                 <div>
                   <p className="eyebrow">Recovered Op Fragment</p>
-                  <h3>Quarantine Tunnel Recovery Sweep</h3>
+                  <h3>Quarantine Tunnel Sweep / Hold Bus</h3>
                 </div>
-                <span className="mission-console__chip">ARCHIVE // QMC-17A</span>
+                <span className="mission-console__chip">ARCHIVE / QMC-17A</span>
               </header>
 
               <div className="mission-console__group">
@@ -329,7 +329,7 @@ export function QuarantineTunnelVisor() {
 
               <section className="mission-console__objective">
                 <span className="mission-console__label">Directive</span>
-                <p>Maintain corridor isolation until relay confirmation or remote chain restoration.</p>
+                <p>Maintain corridor isolation until relay confirm or remote chain restore.</p>
               </section>
 
               <div className="mission-console__group mission-console__group--dense">
@@ -344,7 +344,7 @@ export function QuarantineTunnelVisor() {
               <section className="mission-console__archive">
                 <div className="mission-console__archive-head">
                   <span className="mission-console__label">Archive Fragments</span>
-                  <span className="mission-console__archive-state">TIMECODE INCOMPLETE</span>
+                  <span className="mission-console__archive-state">TIMECODE / INCOMPLETE</span>
                 </div>
 
                 <div className="mission-console__fragments">
@@ -370,9 +370,9 @@ export function QuarantineTunnelVisor() {
               onClick={() => handleModeToggle('detector')}
             >
               <span className="scene-trigger__eyebrow">Left Trigger</span>
-              <span className="scene-trigger__label">Motion Detector</span>
+              <span className="scene-trigger__label">Detector Bus</span>
               <span className="scene-trigger__state">
-                {mode === 'detector' ? 'Engaged' : 'Standby'}
+                {mode === 'detector' ? 'Latched' : 'Standby'}
               </span>
             </button>
 
@@ -385,9 +385,9 @@ export function QuarantineTunnelVisor() {
               onClick={() => handleModeToggle('mission')}
             >
               <span className="scene-trigger__eyebrow">Right Trigger</span>
-              <span className="scene-trigger__label">Mission Console</span>
+              <span className="scene-trigger__label">Archive Bus</span>
               <span className="scene-trigger__state">
-                {mode === 'mission' ? 'Engaged' : 'Standby'}
+                {mode === 'mission' ? 'Latched' : 'Standby'}
               </span>
             </button>
           </div>

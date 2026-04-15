@@ -1126,10 +1126,10 @@ button {
   display: flex;
   gap: 1rem;
   align-items: center;
-  color: var(--scene-color-dim);
+  color: rgba(189, 214, 197, 0.72);
   font-family: var(--scene-font-label);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
@@ -1152,14 +1152,14 @@ button {
 }
 
 .ambient-strip span {
-  padding: 0.35rem 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(5, 11, 10, 0.45);
+  padding: 0.3rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(5, 11, 10, 0.38);
 }
 
 .ambient-strip__mode {
-  border-color: rgba(159, 227, 193, 0.16);
-  box-shadow: inset 0 0 0 1px rgba(159, 227, 193, 0.04);
+  border-color: rgba(159, 227, 193, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(159, 227, 193, 0.03);
 }
 
 .visor-scene[data-phase='boot'] .ambient-strip__mode,
@@ -1290,10 +1290,17 @@ button {
 }
 
 .mode-panel__state {
-  color: var(--scene-color-dim);
+  color: rgba(189, 214, 197, 0.64);
   font-family: var(--scene-font-label);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.visor-scene .eyebrow {
+  color: rgba(242, 174, 73, 0.76);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
 }
 
 .detector-panel {
@@ -1314,10 +1321,10 @@ button {
 }
 
 .detector-panel__meta {
-  color: var(--scene-color-dim);
+  color: rgba(189, 214, 197, 0.62);
   font-family: var(--scene-font-label);
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
@@ -1537,16 +1544,17 @@ button {
   gap: 0.7rem;
   padding-top: 0.55rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--scene-color-dim);
+  color: rgba(189, 214, 197, 0.62);
   font-family: var(--scene-font-label);
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .detector-readout strong {
   color: var(--color-text);
   font-weight: 600;
+  letter-spacing: 0.12em;
 }
 
 .detector-readout--watch strong {
@@ -1652,11 +1660,11 @@ button {
 
 .mission-console__header h3 {
   font-family: var(--scene-font-title);
-  font-size: 0.98rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  line-height: 1.15;
+  line-height: 1.1;
   max-width: 16ch;
 }
 
@@ -1669,11 +1677,11 @@ button {
 }
 
 .mission-console__chip {
-  padding: 0.32rem 0.48rem;
-  border: 1px solid rgba(242, 174, 73, 0.16);
-  color: var(--scene-color-dim);
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
+  padding: 0.28rem 0.44rem;
+  border: 1px solid rgba(242, 174, 73, 0.12);
+  color: rgba(189, 214, 197, 0.66);
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
   max-width: 8.5rem;
   white-space: normal;
   text-align: right;
@@ -1691,9 +1699,9 @@ button {
 .mission-console__row {
   padding-bottom: 0.52rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--scene-color-dim);
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
+  color: rgba(189, 214, 197, 0.62);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
 }
 
 .mission-console__row strong {
@@ -1702,6 +1710,7 @@ button {
   text-align: right;
   max-width: 13ch;
   overflow-wrap: anywhere;
+  letter-spacing: 0.11em;
 }
 
 .mission-console__objective,
@@ -1727,15 +1736,15 @@ button {
 .mission-console__label {
   display: inline-block;
   margin-bottom: 0.45rem;
-  color: var(--scene-color-dim);
-  font-size: 0.61rem;
-  letter-spacing: 0.16em;
+  color: rgba(189, 214, 197, 0.58);
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
 }
 
 .mission-console__objective p {
   color: var(--color-text);
-  font-size: 0.86rem;
-  line-height: 1.45;
+  font-size: 0.78rem;
+  line-height: 1.38;
   text-wrap: balance;
 }
 
@@ -1746,9 +1755,9 @@ button {
 .mission-console__archive-state {
   color: var(--scene-color-alert);
   font-family: var(--scene-font-label);
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  opacity: 0.84;
+  font-size: 0.54rem;
+  letter-spacing: 0.18em;
+  opacity: 0.78;
 }
 
 .mission-console__fragments {
@@ -1757,13 +1766,13 @@ button {
 }
 
 .mission-console__fragment {
-  color: rgba(217, 229, 216, 0.8);
+  color: rgba(217, 229, 216, 0.72);
   font-family: var(--scene-font-label);
-  font-size: 0.67rem;
-  letter-spacing: 0.08em;
-  line-height: 1.55;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  line-height: 1.45;
   text-transform: uppercase;
-  opacity: 0.86;
+  opacity: 0.82;
 }
 
 .mission-console__fragment:nth-child(2) {
@@ -1798,7 +1807,7 @@ button {
   padding: 1rem 1.1rem 1.15rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px 18px 28px 28px;
-  color: var(--color-text);
+  color: rgba(217, 229, 216, 0.9);
   text-align: left;
   text-transform: uppercase;
   background:
@@ -1912,22 +1921,22 @@ button {
 .scene-trigger__label,
 .scene-trigger__state {
   font-family: var(--scene-font-label);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
 }
 
 .scene-trigger__eyebrow {
-  color: var(--scene-color-dim);
-  font-size: 0.68rem;
+  color: rgba(189, 214, 197, 0.58);
+  font-size: 0.58rem;
 }
 
 .scene-trigger__label {
-  font-size: 0.82rem;
+  font-size: 0.72rem;
 }
 
 .scene-trigger__state {
-  color: var(--scene-color-dim);
-  font-size: 0.62rem;
-  opacity: 0.82;
+  color: rgba(189, 214, 197, 0.56);
+  font-size: 0.54rem;
+  opacity: 0.78;
 }
 
 .scene-trigger[aria-pressed='true'] .scene-trigger__state {
