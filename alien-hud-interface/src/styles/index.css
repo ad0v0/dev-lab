@@ -1082,52 +1082,103 @@ button {
 }
 
 .visor-scene__mode-layer {
-  display: grid;
-  align-items: end;
-  justify-items: stretch;
-  padding: clamp(6.5rem, 16vh, 8rem) var(--scene-space-edge) calc(var(--scene-space-controls) + 6.8rem);
+  position: absolute;
+  inset:
+          clamp(6.5rem, 16vh, 8rem)
+          var(--scene-space-edge)
+          calc(var(--scene-space-controls) + 6.8rem)
+          var(--scene-space-edge);
+  padding: 0;
+  pointer-events: none;
+  min-height: 0;
 }
 
 .mode-panel {
-  width: min(100%, 28rem);
+  position: absolute;
+  min-width: 0;
+  min-height: 0;
   padding: var(--scene-space-panel);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent),
-    var(--scene-color-shell);
+          linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent),
+          var(--scene-color-shell);
   box-shadow: var(--scene-glow-soft);
   opacity: 0;
-  transform: translateY(1rem);
-  transition:
-    opacity var(--scene-duration-base) ease,
-    transform var(--scene-duration-base) ease,
-    border-color var(--scene-duration-fast) ease,
-    box-shadow var(--scene-duration-fast) ease,
-    visibility 0s linear var(--scene-duration-base);
   visibility: hidden;
   pointer-events: none;
+  transform: translateY(1rem);
+  transition:
+          opacity var(--scene-duration-base) ease,
+          transform var(--scene-duration-base) ease,
+          border-color var(--scene-duration-fast) ease,
+          box-shadow var(--scene-duration-fast) ease,
+          visibility 0s linear var(--scene-duration-base);
+}
+
+.mode-panel--detector,
+.mode-panel--mission {
+  top: 0;
+  bottom: auto;
+  max-height: 100%;
 }
 
 .mode-panel--detector {
-  justify-self: start;
-  align-self: center;
+  left: 0;
+  width: min(28rem, calc(50% - 0.75rem));
 }
 
 .mode-panel--mission {
-  justify-self: end;
-  align-self: center;
+  right: 0;
+  bottom: 0;
+  width: min(24rem, calc(50% - 0.75rem));
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mission-console {
+  display: grid;
+  gap: 0.85rem;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.45rem;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(159, 227, 193, 0.28) transparent;
+}
+
+.mission-console::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mission-console::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mission-console::-webkit-scrollbar-thumb {
+  background: rgba(159, 227, 193, 0.22);
+  border-radius: 999px;
+}
+
+.mission-console::-webkit-scrollbar-thumb:hover {
+  background: rgba(159, 227, 193, 0.34);
 }
 
 .visor-scene[data-mode='detector'] .mode-panel--detector,
 .visor-scene[data-mode='mission'] .mode-panel--mission {
   opacity: 1;
-  transform: translateY(0);
   visibility: visible;
   pointer-events: auto;
   border-color: rgba(159, 227, 193, 0.2);
   box-shadow: var(--scene-glow-strong);
   transition-delay: 0s;
+  transform: none;
 }
 
 .mode-panel__header {
@@ -1460,27 +1511,158 @@ button {
   }
 }
 
-.mission-list {
-  display: grid;
-  gap: 0.75rem;
+.mission-console__header,
+.mission-console__archive-head,
+.mission-console__row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.8rem;
 }
 
-.mission-list__row {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 0.55rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--scene-color-dim);
-  font-family: var(--scene-font-label);
-  font-size: 0.76rem;
+.mission-console__header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.1rem;
+  background:
+          linear-gradient(180deg, rgba(7, 13, 13, 0.97), rgba(7, 13, 13, 0.9));
+  backdrop-filter: blur(8px);
+}
+
+.mission-console__header > div,
+.mission-console__row span,
+.mission-console__row strong {
+  min-width: 0;
+}
+
+.mission-console__header h3,
+.mission-console__objective p,
+.mission-console__fragment {
+  margin: 0;
+}
+
+.mission-console__header h3 {
+  font-family: var(--scene-font-title);
+  font-size: 0.98rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.15;
+  max-width: 16ch;
+}
+
+.mission-console__chip,
+.mission-console__label,
+.mission-console__archive-state,
+.mission-console__row {
+  font-family: var(--scene-font-label);
   text-transform: uppercase;
 }
 
-.mission-list__row strong {
+.mission-console__chip {
+  padding: 0.32rem 0.48rem;
+  border: 1px solid rgba(242, 174, 73, 0.16);
+  color: var(--scene-color-dim);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  max-width: 8.5rem;
+  white-space: normal;
+  text-align: right;
+}
+
+.mission-console__group {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.mission-console__group--dense .mission-console__row {
+  padding-bottom: 0.45rem;
+}
+
+.mission-console__row {
+  padding-bottom: 0.52rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--scene-color-dim);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.mission-console__row strong {
   color: var(--color-text);
   font-weight: 600;
+  text-align: right;
+  max-width: 13ch;
+  overflow-wrap: anywhere;
+}
+
+.mission-console__objective,
+.mission-console__archive {
+  position: relative;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent),
+    rgba(7, 13, 13, 0.5);
+}
+
+.mission-console__objective::before,
+.mission-console__archive::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(159, 227, 193, 0.03), transparent);
+  opacity: 0.8;
+}
+
+.mission-console__label {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  color: var(--scene-color-dim);
+  font-size: 0.61rem;
+  letter-spacing: 0.16em;
+}
+
+.mission-console__objective p {
+  color: var(--color-text);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+.mission-console__archive-head {
+  margin-bottom: 0.6rem;
+}
+
+.mission-console__archive-state {
+  color: var(--scene-color-alert);
+  font-family: var(--scene-font-label);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  opacity: 0.84;
+}
+
+.mission-console__fragments {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.mission-console__fragment {
+  color: rgba(217, 229, 216, 0.8);
+  font-family: var(--scene-font-label);
+  font-size: 0.67rem;
+  letter-spacing: 0.08em;
+  line-height: 1.55;
+  text-transform: uppercase;
+  opacity: 0.86;
+}
+
+.mission-console__fragment:nth-child(2) {
+  max-width: 92%;
+  opacity: 0.68;
+  clip-path: polygon(0 0, 96% 0, 92% 100%, 0 100%);
 }
 
 .visor-scene__controls {
@@ -3778,13 +3960,21 @@ button {
   }
 
   .mode-panel {
-    width: 100%;
+    width: auto;
   }
 
   .mode-panel--detector,
   .mode-panel--mission {
-    justify-self: stretch;
-    align-self: end;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    transform: translateY(1rem);
+  }
+
+  .visor-scene[data-mode='detector'] .mode-panel--detector,
+  .visor-scene[data-mode='mission'] .mode-panel--mission {
+    transform: none;
   }
 
   .scene-triggers {

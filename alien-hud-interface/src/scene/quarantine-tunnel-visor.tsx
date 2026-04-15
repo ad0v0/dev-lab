@@ -4,10 +4,22 @@ type SceneMode = 'base' | 'detector' | 'mission';
 type ScenePhase = 'boot' | 'recovering' | 'live';
 type TriggerMode = Exclude<SceneMode, 'base'>;
 
-const missionRows = [
-  ['Route', 'Tunnel A-17'],
-  ['Seal', 'HOLD / PARTIAL'],
-  ['Channel', 'REMOTE // DEGRADED'],
+const missionStatusRows = [
+  ['Sector', 'OBS / A17 / EAST'],
+  ['Route', 'TUNNEL SPINE / LOCK 2'],
+  ['Objective', 'HOLD QUARANTINE THRESHOLD'],
+] as const;
+
+const missionSystemRows = [
+  ['Crew Link', 'UNSYNCED / 1 OF 4'],
+  ['Seal State', 'INNER GATE // PARTIAL'],
+  ['Bio-Risk', 'AMBER / SPORE TRACE'],
+  ['Archive', 'FRAGMENTED / CRC LOSS'],
+] as const;
+
+const missionArchiveFragments = [
+  '00:13:27 // channel-2 break... visual contact los[t]',
+  '00:14:02 // purge request denied // manual auth miss_ing',
 ] as const;
 
 const modeStatusCopy: Record<SceneMode, string> = {
@@ -222,15 +234,54 @@ export function QuarantineTunnelVisor() {
           >
             <div className="mode-panel__header">
               <p className="eyebrow">Mission Console</p>
-              <span className="mode-panel__state">OBJECTIVE BUS // PLACEHOLDER</span>
+              <span className="mode-panel__state">OBJECTIVE BUS // ARCHIVE DEGRADED</span>
             </div>
-            <div className="mission-list" role="presentation">
-              {missionRows.map(([label, value]) => (
-                <div key={label} className="mission-list__row">
-                  <span>{label}</span>
-                  <strong>{value}</strong>
+            <div className="mission-console">
+              <header className="mission-console__header">
+                <div>
+                  <p className="eyebrow">Recovered Op Fragment</p>
+                  <h3>Quarantine Tunnel Recovery Sweep</h3>
                 </div>
-              ))}
+                <span className="mission-console__chip">ARCHIVE // QMC-17A</span>
+              </header>
+
+              <div className="mission-console__group">
+                {missionStatusRows.map(([label, value]) => (
+                  <div key={label} className="mission-console__row">
+                    <span>{label}</span>
+                    <strong>{value}</strong>
+                  </div>
+                ))}
+              </div>
+
+              <section className="mission-console__objective">
+                <span className="mission-console__label">Directive</span>
+                <p>Maintain corridor isolation until relay confirmation or remote chain restoration.</p>
+              </section>
+
+              <div className="mission-console__group mission-console__group--dense">
+                {missionSystemRows.map(([label, value]) => (
+                  <div key={label} className="mission-console__row">
+                    <span>{label}</span>
+                    <strong>{value}</strong>
+                  </div>
+                ))}
+              </div>
+
+              <section className="mission-console__archive">
+                <div className="mission-console__archive-head">
+                  <span className="mission-console__label">Archive Fragments</span>
+                  <span className="mission-console__archive-state">TIMECODE INCOMPLETE</span>
+                </div>
+
+                <div className="mission-console__fragments">
+                  {missionArchiveFragments.map((fragment) => (
+                    <p key={fragment} className="mission-console__fragment">
+                      {fragment}
+                    </p>
+                  ))}
+                </div>
+              </section>
             </div>
           </section>
         </div>
