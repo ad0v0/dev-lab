@@ -289,6 +289,10 @@ button {
   min-height: 100vh;
 }
 
+.visor-scene[data-phase='live'] .visor-scene__camera {
+  animation: visor-camera-idle 12s ease-in-out infinite;
+}
+
 .visor-scene__camera::before {
   content: '';
   position: absolute;
@@ -339,6 +343,10 @@ button {
     inset 0 -80px 120px rgba(0, 0, 0, 0.6);
 }
 
+.visor-scene[data-phase='live'] .world-placeholder {
+  animation: visor-world-breathe 16s ease-in-out infinite;
+}
+
 .world-placeholder::before {
   content: '';
   position: absolute;
@@ -371,6 +379,11 @@ button {
     radial-gradient(circle at 50% 40%, rgba(255, 230, 168, 0.12), rgba(242, 174, 73, 0.08) 24%, rgba(159, 227, 193, 0.04) 44%, transparent 72%);
   filter: blur(12px);
   opacity: 0.7;
+}
+
+.visor-scene[data-phase='live'] .world-placeholder__light,
+.visor-scene[data-phase='live'] .world-placeholder__light-core {
+  animation: visor-light-drift 8.5s ease-in-out infinite;
 }
 
 .world-placeholder__far,
@@ -599,6 +612,14 @@ button {
   opacity: 0.48;
 }
 
+.visor-scene[data-phase='live'] .world-placeholder__fog-band--far {
+  animation: visor-fog-far 18s ease-in-out infinite;
+}
+
+.visor-scene[data-phase='live'] .world-placeholder__fog-band--near {
+  animation: visor-fog-near 14s ease-in-out infinite;
+}
+
 .visor-scene__optics,
 .visor-scene__hud-shell,
 .visor-scene__ambient-ui {
@@ -782,6 +803,14 @@ button {
     );
   mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.2), black 58%, rgba(0, 0, 0, 0.22));
   opacity: 0.4;
+}
+
+.visor-scene[data-phase='live'] .optics-frame__veil {
+  animation: visor-veil-breathe 9s ease-in-out infinite;
+}
+
+.visor-scene[data-phase='live'] .optics-frame__scan {
+  animation: visor-scan-shimmer 4.8s linear infinite;
 }
 
 .optics-frame__ring--outer {
@@ -1047,6 +1076,14 @@ button {
   text-transform: uppercase;
 }
 
+.visor-scene[data-phase='live'] .ambient-strip--top {
+  animation: visor-status-flicker 6.5s steps(2) infinite;
+}
+
+.visor-scene[data-phase='live'] .ambient-strip__mode {
+  animation: visor-chip-pulse 5.6s ease-in-out infinite;
+}
+
 .ambient-strip--top {
   top: clamp(5.4rem, 11vh, 6.6rem);
   left: var(--scene-space-edge);
@@ -1179,6 +1216,14 @@ button {
   box-shadow: var(--scene-glow-strong);
   transition-delay: 0s;
   transform: none;
+}
+
+.visor-scene[data-phase='live'][data-mode='detector'] .mode-panel--detector {
+  animation: visor-panel-idle 7.5s ease-in-out infinite;
+}
+
+.visor-scene[data-phase='live'][data-mode='mission'] .mission-console__chip {
+  animation: visor-chip-pulse 5.2s ease-in-out infinite;
 }
 
 .mode-panel__header {
@@ -1856,6 +1901,143 @@ button {
   100% {
     opacity: 0.22;
     transform: none;
+  }
+}
+
+@keyframes visor-camera-idle {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  25% {
+    transform: translate3d(0.12rem, -0.08rem, 0);
+  }
+
+  50% {
+    transform: translate3d(-0.08rem, 0.06rem, 0);
+  }
+
+  75% {
+    transform: translate3d(0.06rem, 0.12rem, 0);
+  }
+}
+
+@keyframes visor-world-breathe {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+
+  50% {
+    transform: scale(1.003) translateY(0.08rem);
+  }
+}
+
+@keyframes visor-light-drift {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translateX(calc(-50% + 0.08rem)) translateY(-0.06rem);
+    opacity: 0.78;
+  }
+}
+
+@keyframes visor-fog-far {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.22;
+  }
+
+  50% {
+    transform: translate3d(0.5rem, -0.2rem, 0);
+    opacity: 0.28;
+  }
+}
+
+@keyframes visor-fog-near {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.48;
+  }
+
+  50% {
+    transform: translate3d(-0.35rem, 0.18rem, 0);
+    opacity: 0.54;
+  }
+}
+
+@keyframes visor-veil-breathe {
+  0%,
+  100% {
+    opacity: 0.8;
+    filter: blur(14px);
+  }
+
+  50% {
+    opacity: 0.84;
+    filter: blur(15px);
+  }
+}
+
+@keyframes visor-scan-shimmer {
+  0%,
+  100% {
+    opacity: 0.38;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 0.44;
+    transform: translateY(1px);
+  }
+}
+
+@keyframes visor-status-flicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+
+  94% {
+    opacity: 0.88;
+  }
+
+  96% {
+    opacity: 0.96;
+  }
+}
+
+@keyframes visor-chip-pulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 1px rgba(159, 227, 193, 0.04);
+    border-color: rgba(159, 227, 193, 0.16);
+  }
+
+  50% {
+    box-shadow:
+      inset 0 0 0 1px rgba(159, 227, 193, 0.08),
+      0 0 12px rgba(159, 227, 193, 0.06);
+    border-color: rgba(159, 227, 193, 0.24);
+  }
+}
+
+@keyframes visor-panel-idle {
+  0%,
+  100% {
+    transform: none;
+  }
+
+  50% {
+    transform: translateY(-0.08rem);
   }
 }
 
