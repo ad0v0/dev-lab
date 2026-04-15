@@ -46,8 +46,36 @@ export function QuarantineTunnelVisor() {
       <div className="visor-scene__camera">
         <div className="visor-scene__layer visor-scene__world" aria-hidden="true">
           <div className="world-placeholder">
-            <span className="world-placeholder__horizon" />
-            <span className="world-placeholder__vanish" />
+            <div className="world-placeholder__light" />
+
+            <div className="world-placeholder__far">
+              <span className="world-placeholder__aperture" />
+              <span className="world-placeholder__light-core" />
+              <span className="world-placeholder__ceiling" />
+            </div>
+
+            <div className="world-placeholder__mid">
+              <span className="world-placeholder__rib world-placeholder__rib--left world-placeholder__rib--a" />
+              <span className="world-placeholder__rib world-placeholder__rib--right world-placeholder__rib--a" />
+              <span className="world-placeholder__rib world-placeholder__rib--left world-placeholder__rib--b" />
+              <span className="world-placeholder__rib world-placeholder__rib--right world-placeholder__rib--b" />
+              <span className="world-placeholder__wall world-placeholder__wall--left" />
+              <span className="world-placeholder__wall world-placeholder__wall--right" />
+            </div>
+
+            <div className="world-placeholder__near">
+              <span className="world-placeholder__frame world-placeholder__frame--left" />
+              <span className="world-placeholder__frame world-placeholder__frame--right" />
+              <span className="world-placeholder__floor" />
+              <span className="world-placeholder__floor-line world-placeholder__floor-line--left" />
+              <span className="world-placeholder__floor-line world-placeholder__floor-line--right" />
+              <span className="world-placeholder__threshold" />
+            </div>
+
+            <div className="world-placeholder__fog">
+              <span className="world-placeholder__fog-band world-placeholder__fog-band--far" />
+              <span className="world-placeholder__fog-band world-placeholder__fog-band--near" />
+            </div>
           </div>
         </div>
 
