@@ -308,6 +308,18 @@ button {
     transform 420ms ease;
 }
 
+.visor-scene__camera::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background:
+    linear-gradient(180deg, transparent 0 28%, rgba(214, 232, 223, 0.1) 28% 31%, transparent 31% 54%, rgba(214, 232, 223, 0.08) 54% 57%, transparent 57% 100%);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
 .visor-scene__layer {
   position: absolute;
   inset: 0;
@@ -696,6 +708,51 @@ button {
 .visor-scene[data-phase='live'] .visor-scene__camera::before {
   opacity: 0;
   animation: none;
+}
+
+.visor-scene[data-glitch='light'] .visor-scene__camera,
+.visor-scene[data-glitch='hard'] .visor-scene__camera {
+  animation: visor-glitch-camera 120ms steps(2) 1;
+}
+
+.visor-scene[data-glitch='light'] .visor-scene__camera::after {
+  opacity: 0.24;
+  animation: visor-glitch-slices 140ms steps(2) 1;
+}
+
+.visor-scene[data-glitch='hard'] .visor-scene__camera::after {
+  opacity: 0.42;
+  animation: visor-glitch-slices-hard 220ms steps(3) 1;
+}
+
+.visor-scene[data-glitch='light'] .visor-scene__world {
+  animation: visor-glitch-world 140ms steps(2) 1;
+}
+
+.visor-scene[data-glitch='hard'] .visor-scene__world {
+  animation: visor-glitch-world-hard 220ms steps(3) 1;
+}
+
+.visor-scene[data-glitch='light'] .visor-scene__optics,
+.visor-scene[data-glitch='light'] .visor-scene__hud-shell {
+  animation: visor-glitch-overlay 140ms steps(2) 1;
+}
+
+.visor-scene[data-glitch='hard'] .visor-scene__optics,
+.visor-scene[data-glitch='hard'] .visor-scene__hud-shell {
+  animation: visor-glitch-overlay-hard 220ms steps(3) 1;
+}
+
+.visor-scene[data-glitch='light'] .ambient-strip,
+.visor-scene[data-glitch='light'][data-mode='detector'] .detector-panel__meta,
+.visor-scene[data-glitch='light'][data-mode='mission'] .mission-console__archive-state {
+  animation: visor-glitch-text 120ms steps(2) 1;
+}
+
+.visor-scene[data-glitch='hard'] .ambient-strip,
+.visor-scene[data-glitch='hard'][data-mode='detector'] .detector-panel__meta,
+.visor-scene[data-glitch='hard'][data-mode='mission'] .mission-console__archive-state {
+  animation: visor-glitch-text-hard 180ms steps(3) 1;
 }
 
 .optics-frame,
@@ -1377,6 +1434,11 @@ button {
   animation: detector-noise 2.6s steps(2) infinite;
 }
 
+.visor-scene[data-glitch='light'][data-mode='detector'] .detector-screen__noise,
+.visor-scene[data-glitch='hard'][data-mode='detector'] .detector-screen__noise {
+  opacity: 0.48;
+}
+
 .detector-screen__sweep,
 .detector-screen__beam {
   inset: 8%;
@@ -1710,6 +1772,11 @@ button {
   clip-path: polygon(0 0, 96% 0, 92% 100%, 0 100%);
 }
 
+.visor-scene[data-glitch='light'][data-mode='mission'] .mission-console__fragment:nth-child(2),
+.visor-scene[data-glitch='hard'][data-mode='mission'] .mission-console__fragment:nth-child(2) {
+  animation: visor-glitch-fragment 140ms steps(2) 1;
+}
+
 .visor-scene__controls {
   display: flex;
   align-items: flex-end;
@@ -2038,6 +2105,159 @@ button {
 
   50% {
     transform: translateY(-0.08rem);
+  }
+}
+
+@keyframes visor-glitch-camera {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  35% {
+    transform: translate3d(0.12rem, 0, 0);
+  }
+
+  70% {
+    transform: translate3d(-0.08rem, 0.04rem, 0);
+  }
+}
+
+@keyframes visor-glitch-world {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  45% {
+    transform: translate3d(0.18rem, -0.05rem, 0);
+    opacity: 0.92;
+  }
+}
+
+@keyframes visor-glitch-world-hard {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  24% {
+    transform: translate3d(0.24rem, -0.08rem, 0);
+    opacity: 0.84;
+  }
+
+  58% {
+    transform: translate3d(-0.2rem, 0.06rem, 0);
+    opacity: 0.94;
+  }
+}
+
+@keyframes visor-glitch-overlay {
+  0%,
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateX(0.16rem);
+    opacity: 0.88;
+  }
+}
+
+@keyframes visor-glitch-overlay-hard {
+  0%,
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+
+  32% {
+    transform: translateX(0.24rem);
+    opacity: 0.78;
+  }
+
+  68% {
+    transform: translateX(-0.18rem);
+    opacity: 0.92;
+  }
+}
+
+@keyframes visor-glitch-slices {
+  0%,
+  100% {
+    transform: none;
+    opacity: 0;
+  }
+
+  35%,
+  75% {
+    transform: translateY(-0.12rem);
+    opacity: 0.24;
+  }
+}
+
+@keyframes visor-glitch-slices-hard {
+  0%,
+  100% {
+    transform: none;
+    opacity: 0;
+  }
+
+  20% {
+    transform: translateY(-0.18rem);
+    opacity: 0.42;
+  }
+
+  58% {
+    transform: translateY(0.12rem);
+    opacity: 0.32;
+  }
+}
+
+@keyframes visor-glitch-text {
+  0%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: translateX(0.08rem);
+  }
+}
+
+@keyframes visor-glitch-text-hard {
+  0%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+
+  25% {
+    opacity: 0.56;
+    transform: translateX(-0.12rem);
+  }
+
+  60% {
+    opacity: 0.86;
+    transform: translateX(0.1rem);
+  }
+}
+
+@keyframes visor-glitch-fragment {
+  0%,
+  100% {
+    opacity: 0.68;
+    filter: none;
+  }
+
+  50% {
+    opacity: 0.42;
+    filter: blur(0.3px);
   }
 }
 

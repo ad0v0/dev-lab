@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type SceneMode = 'base' | 'detector' | 'mission';
 type ScenePhase = 'boot' | 'recovering' | 'live';
 type TriggerMode = Exclude<SceneMode, 'base'>;
+type GlitchLevel = 'none' | 'light' | 'hard';
 
 const missionStatusRows = [
   ['Sector', 'OBS / A17 / EAST'],
@@ -41,9 +42,37 @@ function toggleMode(currentMode: SceneMode, nextMode: TriggerMode): SceneMode {
 export function QuarantineTunnelVisor() {
   const [mode, setMode] = useState<SceneMode>('base');
   const [phase, setPhase] = useState<ScenePhase>('boot');
+  const [glitchLevel, setGlitchLevel] = useState<GlitchLevel>('none');
   const modeStatus = modeStatusCopy[mode];
   const phaseStatus = phaseStatusCopy[phase];
   const isLive = phase === 'live';
+  const glitchTimeoutRef = useRef<number | null>(null);
+  const idleGlitchTimeoutRef = useRef<number | null>(null);
+  const previousModeRef = useRef<SceneMode>('base');
+
+  function clearGlitchTimers() {
+    if (glitchTimeoutRef.current !== null) {
+      window.clearTimeout(glitchTimeoutRef.current);
+      glitchTimeoutRef.current = null;
+    }
+
+    if (idleGlitchTimeoutRef.current !== null) {
+      window.clearTimeout(idleGlitchTimeoutRef.current);
+      idleGlitchTimeoutRef.current = null;
+    }
+  }
+
+  function triggerGlitch(level: Exclude<GlitchLevel, 'none'>, durationMs: number) {
+    if (glitchTimeoutRef.current !== null) {
+      window.clearTimeout(glitchTimeoutRef.current);
+    }
+
+    setGlitchLevel(level);
+    glitchTimeoutRef.current = window.setTimeout(() => {
+      setGlitchLevel('none');
+      glitchTimeoutRef.current = null;
+    }, durationMs);
+  }
 
   function handleModeToggle(nextMode: TriggerMode) {
     setMode((currentMode) => toggleMode(currentMode, nextMode));
@@ -54,10 +83,53 @@ export function QuarantineTunnelVisor() {
     const liveTimer = window.setTimeout(() => setPhase('live'), 2300);
 
     return () => {
+      clearGlitchTimers();
       window.clearTimeout(recoveringTimer);
       window.clearTimeout(liveTimer);
     };
   }, []);
+
+  useEffect(() => {
+    if (phase === 'boot') {
+      triggerGlitch('hard', 220);
+      return;
+    }
+
+    if (phase === 'recovering') {
+      const timer = window.setTimeout(() => triggerGlitch('hard', 260), 140);
+      return () => window.clearTimeout(timer);
+    }
+
+    if (phase === 'live') {
+      const scheduleIdleGlitch = () => {
+        const delay = 7000 + Math.round(Math.random() * 6000);
+        idleGlitchTimeoutRef.current = window.setTimeout(() => {
+          triggerGlitch('light', 140);
+          scheduleIdleGlitch();
+        }, delay);
+      };
+
+      scheduleIdleGlitch();
+      return () => {
+        if (idleGlitchTimeoutRef.current !== null) {
+          window.clearTimeout(idleGlitchTimeoutRef.current);
+          idleGlitchTimeoutRef.current = null;
+        }
+      };
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (!isLive) {
+      previousModeRef.current = mode;
+      return;
+    }
+
+    if (previousModeRef.current !== mode) {
+      triggerGlitch('light', 150);
+      previousModeRef.current = mode;
+    }
+  }, [isLive, mode]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -85,6 +157,7 @@ export function QuarantineTunnelVisor() {
       className="visor-scene"
       aria-label="Quarantine Tunnel Visor scene"
       data-phase={phase}
+      data-glitch={glitchLevel}
       data-mode={mode}
     >
       <div className="visor-scene__camera">
