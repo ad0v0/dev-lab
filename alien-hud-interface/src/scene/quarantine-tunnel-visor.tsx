@@ -175,12 +175,43 @@ export function QuarantineTunnelVisor() {
           >
             <div className="mode-panel__header">
               <p className="eyebrow">Detector</p>
-              <span className="mode-panel__state">MOTION TRACE // PLACEHOLDER</span>
+              <span className="mode-panel__state">MOTION TRACE // DEGRADED TRACK</span>
             </div>
-            <div className="detector-placeholder" aria-hidden="true">
-              <span className="detector-placeholder__arc detector-placeholder__arc--a" />
-              <span className="detector-placeholder__arc detector-placeholder__arc--b" />
-              <span className="detector-placeholder__sweep" />
+            <div className="detector-panel">
+              <div className="detector-panel__meta" aria-hidden="true">
+                <span>Tracker Bus / A17</span>
+                <span>CONF 61%</span>
+              </div>
+
+              <div className="detector-screen" aria-hidden="true">
+                <span className="detector-screen__frame detector-screen__frame--outer" />
+                <span className="detector-screen__frame detector-screen__frame--inner" />
+                <span className="detector-screen__grid detector-screen__grid--x" />
+                <span className="detector-screen__grid detector-screen__grid--y" />
+                <span className="detector-screen__ring detector-screen__ring--a" />
+                <span className="detector-screen__ring detector-screen__ring--b" />
+                <span className="detector-screen__ring detector-screen__ring--c" />
+                <span className="detector-screen__noise" />
+                <span className="detector-screen__sweep" />
+                <span className="detector-screen__beam" />
+                <span className="detector-screen__blip detector-screen__blip--primary" />
+                <span className="detector-screen__blip detector-screen__blip--secondary" />
+                <span className="detector-screen__guide detector-screen__guide--left" />
+                <span className="detector-screen__guide detector-screen__guide--right" />
+                <span className="detector-screen__trace detector-screen__trace--a" />
+                <span className="detector-screen__trace detector-screen__trace--b" />
+              </div>
+
+              <div className="detector-panel__readout">
+                <div className="detector-readout">
+                  <span>Range Gate</span>
+                  <strong>24M / SWEEP</strong>
+                </div>
+                <div className="detector-readout detector-readout--watch">
+                  <span>Trace Echo</span>
+                  <strong>INTERMITTENT</strong>
+                </div>
+              </div>
             </div>
           </section>
 
