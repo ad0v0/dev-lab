@@ -86,6 +86,12 @@ export type ConsoleZone = {
   lines: string[];
 };
 
+export type CommandDatum = {
+  label: string;
+  value: string;
+  state?: 'neutral' | 'live' | 'warning';
+};
+
 export type ConsoleReadout = {
   label: string;
   value: string;
@@ -94,6 +100,24 @@ export type ConsoleReadout = {
 export type ConsoleTimeline = {
   stamp: string;
   event: string;
+};
+
+export type TelemetryThread = {
+  label: string;
+  value: string;
+  note: string;
+  state: 'dim' | 'watch' | 'critical' | 'active';
+};
+
+export type InterventionAction = {
+  label: string;
+  state: 'armed' | 'standby' | 'locked';
+  detail: string;
+};
+
+export type ResidueTrace = {
+  stamp: string;
+  text: string;
 };
 
 export const modeDefinitions: ModeDefinitionMap = {
@@ -337,35 +361,119 @@ export const displayCarriers: DisplayCarrier[] = [
 
 export const consoleZones: ConsoleZone[] = [
   {
-    eyebrow: 'Bay Status',
-    title: 'Quarantine Corridor A-17',
+    eyebrow: 'Observation',
+    title: 'Corridor A-17 aperture',
     lines: [
-      'Primary shutters locked',
-      'Atmosphere stable but cold',
-      'Synthetic observer relay remains online',
+      'sealed blast partition beyond midpoint',
+      'remote optics forced into degraded observation mode',
+      'unstable signal zone persists deeper in the corridor',
     ],
   },
   {
-    eyebrow: 'Live Directive',
-    title: 'Stabilize observation feed',
+    eyebrow: 'System Logic',
+    title: 'Automated response already active',
     lines: [
-      'Realign sensor mast to corridor centerline',
-      'Verify vibration drift under threshold',
-      'Do not open inner gate without second operator',
+      'interior route sealed by remote actuation',
+      'airflow reduced through suspect corridor',
+      'anomaly classification unresolved',
     ],
   },
 ];
 
 export const consoleReadouts: ConsoleReadout[] = [
-  { label: 'Pressure', value: 'STABLE' },
-  { label: 'Core Load', value: '71%' },
-  { label: 'Sweep Arc', value: '128 DEG' },
-  { label: 'Bio Trace', value: 'LOW' },
+  { label: 'Threat Index', value: 'AMBER / 2' },
+  { label: 'Confidence', value: '61%' },
+  { label: 'Airflow Cut', value: '34%' },
+  { label: 'Optics Loss', value: 'INTERMITTENT' },
 ];
 
 export const consoleTimeline: ConsoleTimeline[] = [
-  { stamp: '02:14', event: 'Seal integrity confirmed by night shift' },
-  { stamp: '02:27', event: 'Observation feed drift exceeds preferred tolerance' },
-  { stamp: '02:42', event: 'Remote relay correction queued' },
-  { stamp: '03:03', event: 'Unverified thermal bloom near outer hatch' },
+  { stamp: '02:14', event: 'seal integrity confirmed by night shift' },
+  { stamp: '02:27', event: 'optics drift rises above preferred tolerance' },
+  { stamp: '02:42', event: 'remote actuation seals interior branch' },
+  { stamp: '03:03', event: 'thermal bloom flagged near outer relay' },
+] as const;
+
+export const commandScarData: CommandDatum[] = [
+  { label: 'Console', value: 'QMC-17A', state: 'neutral' },
+  { label: 'Sector', value: 'OBS / LV-426 / EAST', state: 'neutral' },
+  { label: 'Mode', value: 'QUARANTINE // DEGRADED', state: 'warning' },
+  { label: 'Clock Drift', value: '+00:13', state: 'warning' },
+  { label: 'Operator Channel', value: 'REMOTE // UNSIGNED', state: 'live' },
+  { label: 'Procedure', value: 'AUTO RESPONSE / HOLD', state: 'warning' },
+] as const;
+
+export const telemetryThreads: TelemetryThread[] = [
+  {
+    label: 'Pressure Drift',
+    value: '+0.03 BAR',
+    note: 'oscillation present',
+    state: 'watch',
+  },
+  {
+    label: 'Particulate Density',
+    value: '0.16 MG',
+    note: 'trace map incomplete',
+    state: 'active',
+  },
+  {
+    label: 'Thermal Bloom',
+    value: '41.8 C',
+    note: 'localized spill',
+    state: 'watch',
+  },
+  {
+    label: 'Relay Integrity',
+    value: '71%',
+    note: 'intermittent',
+    state: 'critical',
+  },
+  {
+    label: 'Feed Latency',
+    value: '381 MS',
+    note: 'degraded optics',
+    state: 'watch',
+  },
+  {
+    label: 'Seal Response',
+    value: '02.8 S',
+    note: 'within hold range',
+    state: 'dim',
+  },
+  {
+    label: 'Sensor Confidence',
+    value: '61%',
+    note: 'classification unresolved',
+    state: 'active',
+  },
+] as const;
+
+export const interventionActions: InterventionAction[] = [
+  {
+    label: 'Manual Shutter Cycle',
+    state: 'armed',
+    detail: 'armed // not verified',
+  },
+  {
+    label: 'Relay Latch',
+    state: 'standby',
+    detail: 'remote clamp live',
+  },
+  {
+    label: 'Purge Arm',
+    state: 'locked',
+    detail: 'dual auth required',
+  },
+  {
+    label: 'Route Isolation',
+    state: 'armed',
+    detail: 'inner branch sealed',
+  },
+] as const;
+
+export const residueTraces: ResidueTrace[] = [
+  { stamp: '03:11', text: 'recheck drift after cycle-2' },
+  { stamp: '03:09', text: 'dual auth required // local key absent' },
+  { stamp: '02:57', text: 'obs unit adapted / not for primary command' },
+  { stamp: '02:41', text: 'maintenance prompt left incomplete' },
 ] as const;

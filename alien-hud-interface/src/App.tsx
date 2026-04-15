@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import { useState } from 'react';
 import {
   alertStates,
+  commandScarData,
   consoleReadouts,
   consoleTimeline,
   consoleZones,
@@ -12,10 +13,13 @@ import {
   hudIndicators,
   hudLabels,
   hudReadouts,
+  interventionActions,
   labEffects,
   modeDefinitions,
   panelVariants,
   surfaceTreatments,
+  telemetryThreads,
+  residueTraces,
   type LabEffect,
   type LabMode,
 } from './content/lab-content';
@@ -56,7 +60,7 @@ export default function App() {
               {activeMode.tag}
             </span>
           </section>
-        ) : (
+        ) : mode === 'scene' ? null : (
           <SignalStage
             mode={mode}
             title={activeMode.title}
@@ -372,25 +376,14 @@ function DesignSystemBoard() {
 
 function SceneModeBoard() {
   return (
-    <>
-      <QuarantineConsole
-        zones={consoleZones}
-        readouts={consoleReadouts}
-        timeline={consoleTimeline}
-      />
-
-      <section className="layout-strip">
-        <StoryCard
-          kicker="Narrative"
-          title="Recent human presence"
-          body="The copy and logs imply an active operational space rather than a decorative sci-fi screen."
-        />
-        <StoryCard
-          kicker="Composition"
-          title="Controlled asymmetry"
-          body="A large radar field carries the frame while the right stack compresses urgency into readouts, alerts, and incident history."
-        />
-      </section>
-    </>
+    <QuarantineConsole
+      scar={commandScarData}
+      zones={consoleZones}
+      readouts={consoleReadouts}
+      timeline={consoleTimeline}
+      telemetry={telemetryThreads}
+      actions={interventionActions}
+      residue={residueTraces}
+    />
   );
 }
