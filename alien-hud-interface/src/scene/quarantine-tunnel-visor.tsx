@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 type SceneMode = 'base' | 'detector' | 'mission';
+type TriggerMode = Exclude<SceneMode, 'base'>;
 
 const missionRows = [
   ['Route', 'Tunnel A-17'],
@@ -8,12 +9,23 @@ const missionRows = [
   ['Channel', 'REMOTE // DEGRADED'],
 ] as const;
 
-function toggleMode(currentMode: SceneMode, nextMode: Exclude<SceneMode, 'base'>): SceneMode {
+const modeStatusCopy: Record<SceneMode, string> = {
+  base: 'MODE BASE // PASSIVE WATCH',
+  detector: 'MODE DETECTOR // MOTION TRACE',
+  mission: 'MODE MISSION // OBJECTIVE BUS',
+};
+
+function toggleMode(currentMode: SceneMode, nextMode: TriggerMode): SceneMode {
   return currentMode === nextMode ? 'base' : nextMode;
 }
 
 export function QuarantineTunnelVisor() {
   const [mode, setMode] = useState<SceneMode>('base');
+  const modeStatus = modeStatusCopy[mode];
+
+  function handleModeToggle(nextMode: TriggerMode) {
+    setMode((currentMode) => toggleMode(currentMode, nextMode));
+  }
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -21,14 +33,14 @@ export function QuarantineTunnelVisor() {
         return;
       }
 
-      if (event.key === 'ArrowLeft') {
+      if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') {
         event.preventDefault();
-        setMode((currentMode) => toggleMode(currentMode, 'detector'));
+        handleModeToggle('detector');
       }
 
-      if (event.key === 'ArrowRight') {
+      if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') {
         event.preventDefault();
-        setMode((currentMode) => toggleMode(currentMode, 'mission'));
+        handleModeToggle('mission');
       }
     }
 
@@ -113,11 +125,11 @@ export function QuarantineTunnelVisor() {
           <div className="ambient-strip ambient-strip--top">
             <span>QTV / POV / LIVE</span>
             <span>OPTICS DEGRADED</span>
-            <span>MODE {mode.toUpperCase()}</span>
+            <span className="ambient-strip__mode">{modeStatus}</span>
           </div>
           <div className="ambient-strip ambient-strip--bottom">
             <span>REMOTE VISOR</span>
-            <span>LOW LATENCY HOLD</span>
+            <span>{mode === 'base' ? 'LOW LATENCY HOLD' : 'TOOL CHANNEL ACTIVE'}</span>
           </div>
         </div>
 
@@ -164,20 +176,28 @@ export function QuarantineTunnelVisor() {
               type="button"
               className="scene-trigger scene-trigger--detector"
               aria-pressed={mode === 'detector'}
-              onClick={() => setMode((currentMode) => toggleMode(currentMode, 'detector'))}
+              aria-label="Toggle motion detector overlay"
+              onClick={() => handleModeToggle('detector')}
             >
               <span className="scene-trigger__eyebrow">Left Trigger</span>
               <span className="scene-trigger__label">Motion Detector</span>
+              <span className="scene-trigger__state">
+                {mode === 'detector' ? 'Engaged' : 'Standby'}
+              </span>
             </button>
 
             <button
               type="button"
               className="scene-trigger scene-trigger--mission"
               aria-pressed={mode === 'mission'}
-              onClick={() => setMode((currentMode) => toggleMode(currentMode, 'mission'))}
+              aria-label="Toggle mission console overlay"
+              onClick={() => handleModeToggle('mission')}
             >
               <span className="scene-trigger__eyebrow">Right Trigger</span>
               <span className="scene-trigger__label">Mission Console</span>
+              <span className="scene-trigger__state">
+                {mode === 'mission' ? 'Engaged' : 'Standby'}
+              </span>
             </button>
           </div>
         </div>

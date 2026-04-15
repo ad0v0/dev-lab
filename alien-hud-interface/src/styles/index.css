@@ -796,6 +796,18 @@ button {
   background: rgba(5, 11, 10, 0.45);
 }
 
+.ambient-strip__mode {
+  border-color: rgba(159, 227, 193, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(159, 227, 193, 0.04);
+}
+
+.visor-scene[data-mode='detector'] .ambient-strip__mode,
+.visor-scene[data-mode='mission'] .ambient-strip__mode {
+  color: var(--color-text);
+  border-color: rgba(159, 227, 193, 0.28);
+  background: rgba(9, 19, 18, 0.72);
+}
+
 .visor-scene__mode-layer {
   display: grid;
   align-items: end;
@@ -817,7 +829,10 @@ button {
   transition:
     opacity var(--scene-duration-base) ease,
     transform var(--scene-duration-base) ease,
-    border-color var(--scene-duration-fast) ease;
+    border-color var(--scene-duration-fast) ease,
+    box-shadow var(--scene-duration-fast) ease,
+    visibility 0s linear var(--scene-duration-base);
+  visibility: hidden;
   pointer-events: none;
 }
 
@@ -835,8 +850,11 @@ button {
 .visor-scene[data-mode='mission'] .mode-panel--mission {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
   pointer-events: auto;
   border-color: rgba(159, 227, 193, 0.2);
+  box-shadow: var(--scene-glow-strong);
+  transition-delay: 0s;
 }
 
 .mode-panel__header {
@@ -926,7 +944,7 @@ button {
 .scene-trigger {
   position: relative;
   display: grid;
-  gap: 0.32rem;
+  gap: 0.34rem;
   padding: 1rem 1.1rem 1.15rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px 18px 28px 28px;
@@ -943,28 +961,104 @@ button {
     transform var(--scene-duration-fast) ease,
     border-color var(--scene-duration-fast) ease,
     box-shadow var(--scene-duration-fast) ease,
-    background-color var(--scene-duration-fast) ease;
+    background-color var(--scene-duration-fast) ease,
+    color var(--scene-duration-fast) ease;
+}
+
+.scene-trigger::before,
+.scene-trigger::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  transition:
+    opacity var(--scene-duration-fast) ease,
+    transform var(--scene-duration-fast) ease,
+    border-color var(--scene-duration-fast) ease;
+}
+
+.scene-trigger::before {
+  inset: 0.5rem 0.65rem auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(159, 227, 193, 0.16), transparent);
+  opacity: 0.4;
+}
+
+.scene-trigger::after {
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.65rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(242, 174, 73, 0.18), transparent);
+  opacity: 0.3;
 }
 
 .scene-trigger:hover,
 .scene-trigger:focus-visible {
   transform: translateY(-2px);
   border-color: rgba(242, 174, 73, 0.28);
+  color: #eef8f0;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 0 0 1px rgba(242, 174, 73, 0.12),
     0 18px 42px rgba(0, 0, 0, 0.38);
 }
 
+.scene-trigger:hover::before,
+.scene-trigger:focus-visible::before {
+  opacity: 0.72;
+}
+
+.scene-trigger:hover::after,
+.scene-trigger:focus-visible::after {
+  opacity: 0.52;
+}
+
+.scene-trigger:active {
+  transform: translateY(0);
+  border-color: rgba(242, 174, 73, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 24px rgba(0, 0, 0, 0.24),
+    0 10px 24px rgba(0, 0, 0, 0.32);
+}
+
 .scene-trigger[aria-pressed='true'] {
   border-color: rgba(159, 227, 193, 0.3);
+  color: #f4fbf6;
+  background:
+    linear-gradient(180deg, rgba(159, 227, 193, 0.08), transparent 48%),
+    rgba(8, 16, 15, 0.96);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 0 0 1px rgba(159, 227, 193, 0.08),
     var(--scene-glow-strong);
 }
 
+.scene-trigger[aria-pressed='true']::before {
+  opacity: 0.9;
+  background: linear-gradient(90deg, transparent, rgba(159, 227, 193, 0.28), transparent);
+}
+
+.scene-trigger[aria-pressed='true']::after {
+  opacity: 0.85;
+  background: linear-gradient(90deg, transparent, rgba(242, 174, 73, 0.34), transparent);
+}
+
+.scene-trigger:focus-visible {
+  outline: none;
+}
+
+.scene-trigger:focus-visible {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(242, 174, 73, 0.12),
+    0 0 0 3px rgba(242, 174, 73, 0.08),
+    0 18px 42px rgba(0, 0, 0, 0.38);
+}
+
 .scene-trigger__eyebrow,
-.scene-trigger__label {
+.scene-trigger__label,
+.scene-trigger__state {
   font-family: var(--scene-font-label);
   letter-spacing: 0.14em;
 }
@@ -976,6 +1070,17 @@ button {
 
 .scene-trigger__label {
   font-size: 0.82rem;
+}
+
+.scene-trigger__state {
+  color: var(--scene-color-dim);
+  font-size: 0.62rem;
+  opacity: 0.82;
+}
+
+.scene-trigger[aria-pressed='true'] .scene-trigger__state {
+  color: var(--scene-color-live);
+  opacity: 1;
 }
 
 .utility-strip {
