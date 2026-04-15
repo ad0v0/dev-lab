@@ -2,10 +2,6 @@ import type { CSSProperties } from 'react';
 import { useState } from 'react';
 import {
   alertStates,
-  commandScarData,
-  consoleReadouts,
-  consoleTimeline,
-  consoleZones,
   displayCarriers,
   hardwareShells,
   hudButtons,
@@ -13,19 +9,15 @@ import {
   hudIndicators,
   hudLabels,
   hudReadouts,
-  interventionActions,
   labEffects,
   modeDefinitions,
-  panelVariants,
   surfaceTreatments,
-  telemetryThreads,
-  residueTraces,
   type LabEffect,
   type LabMode,
 } from './content/lab-content';
 import { ModeSwitch } from './modules/mode-switch';
 import { StoryCard } from './primitives/story-card';
-import { QuarantineConsole } from './scene/quarantine-console';
+import { QuarantineTunnelVisor } from './scene/quarantine-tunnel-visor';
 import { SignalStage } from './scene/signal-stage';
 import { Reticle } from './svg/reticle';
 import './styles/index.css';
@@ -37,46 +29,61 @@ export default function App() {
   return (
     <div className={`lab-shell lab-shell--${mode}`}>
       <div className="lab-shell__noise" aria-hidden="true" />
-      <Reticle />
+      {mode === 'scene' ? null : <Reticle />}
 
-      <header className="masthead">
-        <div className="masthead__copy">
-          <p className="eyebrow">Creative Frontend Lab // CSS + SVG Storytelling</p>
-          <h1>Alien HUD Interface</h1>
-          <p className="masthead__lede">{activeMode.intro}</p>
-        </div>
+      {mode === 'scene' ? (
+        <>
+          <header className="masthead masthead--scene-overlay">
+            <div className="masthead__copy">
+              <p className="eyebrow">Creative Frontend Lab // Scene Mode</p>
+              <h1>Quarantine Tunnel Visor</h1>
+              <p className="masthead__lede">{activeMode.intro}</p>
+            </div>
 
-        <ModeSwitch currentMode={mode} modes={modeDefinitions} onChange={setMode} />
-      </header>
+            <ModeSwitch currentMode={mode} modes={modeDefinitions} onChange={setMode} />
+          </header>
 
-      <main className="composition">
-        {mode === 'design-system' ? (
-          <section className="utility-strip panel" aria-label="Recovered console header">
-            <span className="mini-label">QMC / SYS / DS1</span>
-            <span className="utility-strip__divider" aria-hidden="true" />
-            <span className="utility-strip__text">{activeMode.title}</span>
-            <span className="utility-strip__divider" aria-hidden="true" />
-            <span className="utility-strip__text utility-strip__text--live">
-              {activeMode.tag}
-            </span>
-          </section>
-        ) : mode === 'scene' ? null : (
-          <SignalStage
-            mode={mode}
-            title={activeMode.title}
-            tag={activeMode.tag}
-            summary={activeMode.summary}
-          />
-        )}
+          <main className="composition composition--scene">
+            <SceneModeBoard />
+          </main>
+        </>
+      ) : (
+        <>
+          <header className="masthead">
+            <div className="masthead__copy">
+              <p className="eyebrow">Creative Frontend Lab // CSS + SVG Storytelling</p>
+              <h1>Alien HUD Interface</h1>
+              <p className="masthead__lede">{activeMode.intro}</p>
+            </div>
 
-        {mode === 'lab' ? <LabModeBoard effects={labEffects} /> : null}
-        {mode === 'design-system' ? (
-          <DesignSystemBoard />
-        ) : null}
-        {mode === 'scene' ? (
-          <SceneModeBoard />
-        ) : null}
-      </main>
+            <ModeSwitch currentMode={mode} modes={modeDefinitions} onChange={setMode} />
+          </header>
+
+          <main className="composition">
+            {mode === 'design-system' ? (
+              <section className="utility-strip panel" aria-label="Recovered console header">
+                <span className="mini-label">QMC / SYS / DS1</span>
+                <span className="utility-strip__divider" aria-hidden="true" />
+                <span className="utility-strip__text">{activeMode.title}</span>
+                <span className="utility-strip__divider" aria-hidden="true" />
+                <span className="utility-strip__text utility-strip__text--live">
+                  {activeMode.tag}
+                </span>
+              </section>
+            ) : (
+              <SignalStage
+                mode={mode}
+                title={activeMode.title}
+                tag={activeMode.tag}
+                summary={activeMode.summary}
+              />
+            )}
+
+            {mode === 'lab' ? <LabModeBoard effects={labEffects} /> : null}
+            {mode === 'design-system' ? <DesignSystemBoard /> : null}
+          </main>
+        </>
+      )}
     </div>
   );
 }
@@ -375,15 +382,5 @@ function DesignSystemBoard() {
 }
 
 function SceneModeBoard() {
-  return (
-    <QuarantineConsole
-      scar={commandScarData}
-      zones={consoleZones}
-      readouts={consoleReadouts}
-      timeline={consoleTimeline}
-      telemetry={telemetryThreads}
-      actions={interventionActions}
-      residue={residueTraces}
-    />
-  );
+  return <QuarantineTunnelVisor />;
 }

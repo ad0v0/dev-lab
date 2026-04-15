@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/content/lab-content.ts","./src/modules/mode-switch.tsx","./src/primitives/story-card.tsx","./src/scene/quarantine-console.tsx","./src/scene/quarantine-tunnel-visor.tsx","./src/scene/signal-stage.tsx","./src/svg/reticle.tsx","./src/utils/class-names.ts"],"version":"5.8.3"}

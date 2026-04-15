@@ -28,4 +28,24 @@
   --space-5: 1.5rem;
   --space-6: 2rem;
   --space-7: 3rem;
+
+  --scene-color-void: #040707;
+  --scene-color-shell: rgba(8, 18, 17, 0.88);
+  --scene-color-line: rgba(160, 211, 179, 0.26);
+  --scene-color-live: #9fe3c1;
+  --scene-color-alert: #f2ae49;
+  --scene-color-dim: rgba(189, 214, 197, 0.6);
+
+  --scene-space-edge: clamp(1rem, 2vw, 2rem);
+  --scene-space-panel: clamp(0.9rem, 1.8vw, 1.3rem);
+  --scene-space-controls: clamp(1rem, 2.5vw, 2rem);
+
+  --scene-glow-soft: 0 0 24px rgba(159, 227, 193, 0.1);
+  --scene-glow-strong: 0 0 42px rgba(159, 227, 193, 0.16);
+
+  --scene-duration-fast: 160ms;
+  --scene-duration-base: 260ms;
+
+  --scene-font-title: var(--font-display);
+  --scene-font-label: var(--font-mono);
 }
