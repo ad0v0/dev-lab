@@ -1,22 +1,39 @@
 # Alien HUD Interface
 
-Minimal Vite + React + TypeScript lab for industrial, retro-futuristic CSS and
-SVG storytelling studies.
+Creative frontend lab for building an industrial, retro-futuristic HUD with
+modern CSS and cinematic interface composition.
 
-## Scope
+Inspired by the visual language of sci-fi systems such as *Alien* and
+*Alien: Isolation*.
 
-This folder is self-contained and intended for:
-- `lab`: motion, texture, and interface experiments
-- `design-system`: visual language, tokens, and primitives
-- `scene`: a single cinematic interface composition
+This is a visual R&D space for interface atmosphere, component language, and
+scene-driven UI experiments.
+
+## Modes
+
+- `lab` — Space for experiments.
+- `design-system` — Component playground.
+- `scene` — Final cinematic HUD composition.
+
+## Goals
+
+- explore modern CSS for expressive interface design
+- develop a cohesive industrial sci-fi visual system
+
+## Visual direction
+
+Core qualities:
+- industrial
+- tense
+- tactical
 
 ## Stack
 
 - Vite
 - React
 - TypeScript
-- npm
 - Plain CSS
+- npm
 
 ## Structure
 
@@ -31,34 +48,9 @@ src/
   utils/
 ```
 
-## Scripts
-
-- `npm run dev`
-- `npm run build`
-- `npm run preview`
-- `npm run lint`
-- `npm run typecheck`
-
-## Manual next steps
-
-```bash
+## Getting started
+```
 nvm use
 npm install
 npm run dev
 ```
-
-After dependencies are installed, you can also run:
-
-```bash
-npm run typecheck
-npm run lint
-npm run build
-npm run preview
-```
-
-## Notes
-
-- Dependencies are intentionally local to this folder.
-- No Tailwind, Storybook, backend, or cross-project tooling has been added.
-- The project is organized as a showcase lab, not a production app shell.
-- Modes are internal presentation states, not pages or routes.
